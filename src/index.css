@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0e141b;
+  --color-text: #f1f5f9;
+  --font-heading: "Gabarito", sans-serif;
+  --font-body: "Be Vietnam Pro", system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
