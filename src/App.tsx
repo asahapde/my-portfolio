@@ -22,8 +22,9 @@ function App() {
         <p className="mb-16 text-base font-normal text-gray-400 md:text-2xl">
           I specialize in frontend and full-stack development, creating
           user-friendly and visually appealing web applications. I have a
-          passion for coding and a keen eye for design, which allows me to build
-          seamless user experiences.
+          passion for coding and a strong desire to learn and grow in the field
+          of software development. I am always eager to take on new challenges
+          and expand my skill set.
         </p>
         <a
           className="inline-block text-base sm:text-lg md:text-xl rounded-full bg-sky-500 hover:bg-sky-700 px-8 py-5 leading-5 font-medium"
