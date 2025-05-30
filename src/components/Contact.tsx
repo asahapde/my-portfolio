@@ -1,3 +1,4 @@
+import emailjs from "@emailjs/browser";
 import { useState } from "react";
 
 interface FormData {
@@ -23,12 +24,22 @@ const Contact = () => {
     setSubmitStatus("idle");
 
     try {
-      // Here you would typically send the form data to your backend
-      // For now, we'll simulate a successful submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await emailjs.send(
+        "YOUR_SERVICE_ID", // Replace with your EmailJS service ID
+        "YOUR_TEMPLATE_ID", // Replace with your EmailJS template ID
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: "asahapde@gmail.com",
+        },
+        "YOUR_PUBLIC_KEY" // Replace with your EmailJS public key
+      );
+
       setSubmitStatus("success");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
+      console.error("Error sending email:", error);
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -124,7 +135,7 @@ const Contact = () => {
                 aria-required="true"
               />
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex flex-col gap-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
