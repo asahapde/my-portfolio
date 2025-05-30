@@ -74,11 +74,10 @@ const Hero = () => {
           <RotatingTitle />
         </p>
         <p className="mb-12 md:mb-16 text-base font-normal text-gray-400 md:text-xl lg:text-2xl max-w-3xl animate-slideUp animation-delay-400">
-          I specialize in frontend and full-stack development, creating
-          user-friendly and visually appealing web applications. I have a
-          passion for coding and a strong desire to learn and grow in the field
-          of software development. I am always eager to take on new challenges
-          and expand my skill set.
+          I specialize in full-stack development, creating user-friendly and
+          visually appealing web applications. I have a passion for coding and a
+          strong desire to learn and grow in the field of software development.
+          I am always eager to take on new challenges and expand my skill set.
         </p>
         <div className="flex flex-row items-center gap-6 animate-slideUp animation-delay-600">
           <a
