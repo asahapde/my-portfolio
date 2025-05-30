@@ -5,21 +5,21 @@ const Experience = () => {
       company: "Carfax",
       period: "May 2023 - Present",
       description:
-        "Led development of enterprise applications using React and Node.js. Implemented CI/CD pipelines and improved application performance by 40%.",
+        "Shipped scalable frontend features in React for 200k+ users, and built a Java tool to automate item uploads to Google Ad Manager.",
     },
     {
       title: "Software Developer Intern",
       company: "Ontario Teacher's Pension Plan",
       period: "May 2021 - September 2022",
       description:
-        "Developed full-stack applications using React and Python. Collaborated with cross-functional teams to deliver features on time.",
+        "Automated internal workflows and developed Angular-based tools to streamline processes across teams and boost productivity.",
     },
     {
       title: "Software Developer Intern",
       company: "Western University",
       period: "May 2020 - August 2020",
       description:
-        "Built responsive websites and web applications. Worked with clients to implement their requirements and improve user experience.",
+        "Built a full-stack mission control dashboard using Angular and Node.js to monitor and manage systems.",
     },
   ];
 
