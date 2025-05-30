@@ -1,23 +1,23 @@
 const Experience = () => {
   const experiences = [
     {
-      title: "Senior Software Engineer",
-      company: "Tech Company",
-      period: "2022 - Present",
+      title: "Associate Software Engineer",
+      company: "Carfax",
+      period: "May 2023 - Present",
       description:
         "Led development of enterprise applications using React and Node.js. Implemented CI/CD pipelines and improved application performance by 40%.",
     },
     {
-      title: "Software Engineer",
-      company: "Startup Inc",
-      period: "2020 - 2022",
+      title: "Software Developer Intern",
+      company: "Ontario Teacher's Pension Plan",
+      period: "May 2021 - September 2022",
       description:
         "Developed full-stack applications using React and Python. Collaborated with cross-functional teams to deliver features on time.",
     },
     {
-      title: "Junior Developer",
-      company: "Digital Agency",
-      period: "2019 - 2020",
+      title: "Software Developer Intern",
+      company: "Western University",
+      period: "May 2020 - August 2020",
       description:
         "Built responsive websites and web applications. Worked with clients to implement their requirements and improve user experience.",
     },

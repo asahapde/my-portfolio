@@ -68,7 +68,7 @@ const Hero = () => {
           Abdullah Sahapdeen
         </h1>
         <p
-          className="mb-9 text-3xl leading-[46px] font-bold tracking-tighter text-sky-500 sm:text-4xl md:text-5xl lg:text-6xl animate-slideUp animation-delay-200"
+          className="mb-9 text-3xl leading-[46px] font-bold tracking-tighter text-sky-500 sm:text-4xl md:text-5xl lg:text-6xl animate-slideUp animation-delay-200 min-h-[46px] sm:min-h-[56px] md:min-h-[66px] lg:min-h-[76px]"
           style={{ fontFamily: "var(--font-heading)" }}
         >
           <RotatingTitle />
@@ -82,7 +82,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-row items-center gap-6 animate-slideUp animation-delay-600">
           <a
-            href="https://drive.google.com/file/d/your-resume-id/view"
+            href="https://drive.google.com/file/d/10d7IoFx5-VKbyAvZqpQ9l-T8BuKzs1aJ/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center text-sm sm:text-base md:text-lg rounded-full bg-white hover:bg-gray-100 text-black px-8 py-4 md:px-10 md:py-5 leading-5 font-medium transition-all hover:scale-105 cursor-pointer hover:shadow-lg hover:shadow-white/20 active:scale-95"
@@ -91,7 +91,7 @@ const Hero = () => {
           </a>
           <div className="flex items-center gap-4">
             <a
-              href="https://linkedin.com/in/your-profile"
+              href="https://www.linkedin.com/in/abdullah-sahapdeen/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 backdrop-blur-sm border border-gray-700 hover:border-sky-500/50 hover:bg-sky-500/10 transition-all duration-200 hover:scale-110 active:scale-95"
@@ -107,7 +107,7 @@ const Hero = () => {
               </svg>
             </a>
             <a
-              href="https://github.com/your-username"
+              href="https://github.com/asahapde"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 backdrop-blur-sm border border-gray-700 hover:border-sky-500/50 hover:bg-sky-500/10 transition-all duration-200 hover:scale-110 active:scale-95"

@@ -4,11 +4,16 @@ const Skills = () => {
       category: "Frontend",
       items: [
         "React",
+        "Angular",
         "TypeScript",
         "Tailwind CSS",
         "Next.js",
         "Redux",
         "Material UI",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "SCSS",
       ],
     },
     {
@@ -17,14 +22,21 @@ const Skills = () => {
         "Node.js",
         "Express",
         "Python",
+        "Java",
+        "Spring Boot",
         "PostgreSQL",
         "MongoDB",
         "REST APIs",
+        "GraphQL",
       ],
     },
     {
       category: "Tools",
-      items: ["Git", "Docker", "AWS", "Figma", "VS Code", "Postman"],
+      items: ["Git", "Docker", "AWS", "CI/CD", "Kubernetes"],
+    },
+    {
+      category: "Testing",
+      items: ["Jest", "Cypress", "Postman"],
     },
   ];
 

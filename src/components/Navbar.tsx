@@ -16,7 +16,8 @@ const Navbar = () => {
             className="text-xl font-bold text-white hover:text-sky-500 transition-colors"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            AS
+            <span className="hidden md:inline">Abdullah Sahapdeen</span>
+            <span className="md:hidden">AS</span>
           </a>
 
           {/* Desktop Menu */}
