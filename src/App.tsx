@@ -1,38 +1,69 @@
+import { useEffect, useState } from "react";
 import "./App.css";
+import Contact from "./components/Contact";
+import Experience from "./components/Experience";
+import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+import Projects from "./components/Projects";
+import Skills from "./components/Skills";
 
 function App() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    // Force a reflow to ensure sections are properly rendered
+    window.scrollTo(0, 0);
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <main className="mx-auto w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-5">
-      <section
-        className="py-24 md:py-32"
-        style={{ backgroundColor: "var(--color-bg)" }}
+    <main className="min-h-screen bg-black text-white scroll-smooth">
+      <Navbar />
+      <div className="pt-16">
+        <div className="mx-auto w-full max-w-3xl md:max-w-4xl lg:max-w-5xl px-5">
+          <Hero />
+        </div>
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
+      </div>
+
+      {/* Scroll to top button */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-8 right-8 p-3 bg-sky-500 text-white rounded-full shadow-lg hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-black transition-all duration-300 ${
+          showScrollTop
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10 pointer-events-none"
+        }`}
+        aria-label="Scroll to top"
       >
-        <h1
-          className="mb-1.5 text-7xl font-bold tracking-tightest text-white sm:text-8xl md:mb-0 md:text-9xl"
-          style={{ fontFamily: "var(--font-heading)" }}
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
         >
-          Abdullah Sahapdeen
-        </h1>
-        <p
-          className="mb-9 text-4xl leading-[46px] font-bold tracking-tighter text-sky-500 sm:text-5xl md:text-6xl"
-          style={{ fontFamily: "var(--font-heading)" }}
-        >
-          Software Engineer
-        </p>
-        <p className="mb-16 text-base font-normal text-gray-400 md:text-2xl">
-          I specialize in frontend and full-stack development, creating
-          user-friendly and visually appealing web applications. I have a
-          passion for coding and a strong desire to learn and grow in the field
-          of software development. I am always eager to take on new challenges
-          and expand my skill set.
-        </p>
-        <a
-          className="inline-block text-base sm:text-lg md:text-xl rounded-full bg-sky-500 hover:bg-sky-700 px-8 py-5 leading-5 font-medium"
-          href="mailto:asahapde@gmail.com"
-        >
-          Get in Touch
-        </a>
-      </section>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          />
+        </svg>
+      </button>
     </main>
   );
 }
