@@ -1,6 +1,24 @@
 const Projects = () => {
   const projects = [
     {
+      title: "TaleForge",
+      description:
+        "A full-stack storytelling platform that allows users to write, read, and explore interactive branching narratives with secure authentication and a responsive UI.",
+      technologies: [
+        "Spring Boot",
+        "Spring Security",
+        "PostgreSQL",
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Docker",
+        "Supabase",
+      ],
+      githubLink: "https://github.com/asahapde/TaleForge",
+      liveLink: "https://tale-forge.vercel.app/",
+      awards: null,
+    },
+    {
       title: "HabitFlow",
       description:
         "A habit-tracking web app that helps users build positive routines through gamified progress tracking and visual insights.",

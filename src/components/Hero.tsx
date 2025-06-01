@@ -81,7 +81,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-row items-center gap-6 animate-slideUp animation-delay-600">
           <a
-            href="https://drive.google.com/file/d/10d7IoFx5-VKbyAvZqpQ9l-T8BuKzs1aJ/view?usp=sharing"
+            href="https://drive.google.com/file/d/1Ye9dWiFidZm4tq9CNCYttci9BxU3AE7W/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center text-sm sm:text-base md:text-lg rounded-full bg-white hover:bg-gray-100 text-black px-8 py-4 md:px-10 md:py-5 leading-5 font-medium transition-all hover:scale-105 cursor-pointer hover:shadow-lg hover:shadow-white/20 active:scale-95"
