@@ -1,193 +1,184 @@
 import { useEffect, useState } from "react";
+import type { Theme } from "../App";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface NavbarProps {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+const navLinks = [
+  { href: "#experience", label: "work" },
+  { href: "#projects", label: "projects" },
+  { href: "#skills", label: "stack" },
+  { href: "#contact", label: "contact" },
+];
+
+const MoonIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+);
+
+const SunIcon = () => (
+  <svg
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+);
+
+const Navbar = ({ theme, toggleTheme }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#skills", label: "Skills" },
-    { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#contact", label: "Contact" },
-  ];
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? "py-4 backdrop-blur-glass shadow-2xl" : "py-6 bg-transparent"
-      }`}
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        background: "var(--nav-bg)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        borderBottom: scrolled
+          ? "1px solid var(--border)"
+          : "1px solid transparent",
+        transition: "border-color 0.2s ease",
+      }}
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <a
-            href="#home"
-            className="group relative text-2xl font-bold text-white transition-all duration-300 hover:scale-105"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            <span className="hidden md:inline">
-              <span className="text-white">Abdullah</span>
-              <span className="text-gradient ml-2">Sahapdeen</span>
-            </span>
-            <span className="md:hidden">
-              <span className="text-white">A</span>
-              <span className="text-gradient">S</span>
-            </span>
-            <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300" />
-          </a>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link, index) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="group relative text-gray-300 hover:text-white transition-all duration-300 cursor-pointer font-medium animate-slide-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <span className="relative z-10">{link.label}</span>
-                <div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:w-full transition-all duration-300" />
-                <div className="absolute inset-0 -m-2 rounded-lg bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </a>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="hidden md:flex">
-            <a
-              href="#contact"
-              className="group relative inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white backdrop-blur-glass rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover-glow active:scale-95 animate-slide-in-up animate-delay-500"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  />
-                </svg>
-                Let's Talk
-              </span>
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden relative p-3 rounded-xl backdrop-blur-glass transition-all duration-300 hover:scale-110 hover-glow group"
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-          >
-            <div className="w-6 h-6 relative">
-              <span
-                className={`absolute block h-0.5 w-6 bg-white transform transition duration-300 ease-in-out ${
-                  isMenuOpen ? "rotate-45 translate-y-2.5" : "translate-y-0"
-                }`}
-              />
-              <span
-                className={`absolute block h-0.5 w-6 bg-white transform transition duration-300 ease-in-out translate-y-2.5 ${
-                  isMenuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute block h-0.5 w-6 bg-white transform transition duration-300 ease-in-out ${
-                  isMenuOpen ? "-rotate-45 translate-y-2.5" : "translate-y-5"
-                }`}
-              />
-            </div>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
+      <div className="max-w-3xl mx-auto px-6 sm:px-8 flex items-center justify-between h-14">
+        {/* Logo */}
+        <a
+          href="#home"
+          className="text-sm font-semibold tracking-tight"
+          style={{ color: "var(--text)" }}
         >
-          <div className="pt-4 pb-6 space-y-1">
-            {navLinks.map((link, index) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`group block px-4 py-3 text-base font-medium text-white hover:text-gradient rounded-xl transition-all duration-300 hover:translate-x-2 hover:bg-white/5 animate-slide-in-left ${
-                  isMenuOpen ? "" : "opacity-0"
-                }`}
-                style={{
-                  animationDelay: `${index * 100 + 200}ms`,
-                  animationFillMode: "forwards",
-                }}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  {link.label}
-                </div>
-              </a>
-            ))}
+          Abdullah Sahapdeen
+        </a>
 
-            {/* Mobile CTA */}
-            <div className="pt-4 px-4">
-              <a
-                href="#contact"
-                className={`group relative inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95 animate-scale-in ${
-                  isMenuOpen ? "" : "opacity-0"
-                }`}
-                style={{
-                  animationDelay: `${navLinks.length * 100 + 400}ms`,
-                  animationFillMode: "forwards",
-                }}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                    />
-                  </svg>
-                  Let's Connect
-                </span>
-              </a>
-            </div>
-          </div>
+        {/* Desktop Nav */}
+        <nav className="hidden sm:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-sm link-accent"
+            >
+              {link.label}
+            </a>
+          ))}
+
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            className="flex items-center justify-center w-7 h-7 rounded-md link-accent transition-colors duration-150"
+          >
+            {theme === "light" ? <MoonIcon /> : <SunIcon />}
+          </button>
+        </nav>
+
+        {/* Mobile Controls */}
+        <div className="sm:hidden flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            className="flex items-center justify-center w-7 h-7 link-accent"
+          >
+            {theme === "light" ? <MoonIcon /> : <SunIcon />}
+          </button>
+
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="flex flex-col items-center justify-center gap-[5px] w-7 h-7"
+            style={{ color: "var(--text)" }}
+          >
+            <span
+              className="block w-5 h-px bg-current transition-transform duration-200 origin-center"
+              style={{
+                transform: menuOpen
+                  ? "rotate(45deg) translateY(6px)"
+                  : "none",
+              }}
+            />
+            <span
+              className="block w-5 h-px bg-current transition-opacity duration-200"
+              style={{ opacity: menuOpen ? 0 : 1 }}
+            />
+            <span
+              className="block w-5 h-px bg-current transition-transform duration-200 origin-center"
+              style={{
+                transform: menuOpen
+                  ? "rotate(-45deg) translateY(-6px)"
+                  : "none",
+              }}
+            />
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Backdrop */}
-      {isMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
-    </nav>
+      {/* Mobile Menu */}
+      <div
+        className="sm:hidden overflow-hidden transition-all duration-200"
+        style={{
+          maxHeight: menuOpen ? "200px" : "0",
+          borderTop: menuOpen ? "1px solid var(--border)" : "none",
+        }}
+      >
+        <nav
+          className="max-w-3xl mx-auto px-6 py-4 flex flex-col gap-1"
+          style={{ background: "var(--bg)" }}
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-sm py-2 link-accent"
+              onClick={closeMenu}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
   );
 };
 
