@@ -1,26 +1,20 @@
 import { useEffect, useRef } from "react";
 
-interface SkillGroup {
-  category: string;
-  items: string[];
-}
-
-const skills: SkillGroup[] = [
+const skills = [
   {
     category: "Frontend",
     items: [
       "React",
       "Angular",
       "TypeScript",
-      "Tailwind CSS",
       "Next.js",
       "Redux",
+      "Tailwind CSS",
       "Material UI",
+      "JavaScript",
       "HTML5",
       "CSS3",
-      "JavaScript",
       "SCSS",
-      "Framer Motion",
     ],
   },
   {
@@ -50,7 +44,6 @@ const skills: SkillGroup[] = [
       "Webpack",
       "Vite",
       "Figma",
-      "VS Code",
     ],
   },
   {
@@ -63,6 +56,10 @@ const skills: SkillGroup[] = [
       "Vitest",
     ],
   },
+];
+
+const certifications = [
+  { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services" },
 ];
 
 function useReveal() {
@@ -103,25 +100,65 @@ const Skills = () => {
           <div className="divider mt-4" />
         </div>
 
-        {/* Skill groups */}
-        <div className="space-y-8">
+        {/* Two-column definition layout */}
+        <div className="space-y-5">
           {skills.map((group) => (
-            <div key={group.category}>
-              <p
-                className="text-xs font-mono uppercase tracking-wider mb-3"
-                style={{ color: "var(--text-subtle)" }}
+            <div
+              key={group.category}
+              className="grid gap-x-8 items-baseline"
+              style={{ gridTemplateColumns: "6rem 1fr" }}
+            >
+              <span
+                className="text-xs font-mono uppercase tracking-wider"
+                style={{ color: "var(--text-subtle)", paddingTop: "0.2rem" }}
               >
                 {group.category}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span key={item} className="tag">
-                    {item}
-                  </span>
-                ))}
-              </div>
+              </span>
+              <span
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {group.items.join(" · ")}
+              </span>
             </div>
           ))}
+        </div>
+
+        {/* Certifications */}
+        <div className="mt-10 pt-8" style={{ borderTop: "1px solid var(--border)" }}>
+          <p
+            className="text-xs font-mono uppercase tracking-wider mb-5"
+            style={{ color: "var(--text-subtle)" }}
+          >
+            Certifications
+          </p>
+          <div className="space-y-3">
+            {certifications.map((cert) => (
+              <div
+                key={cert.name}
+                className="grid gap-x-8 items-baseline"
+                style={{ gridTemplateColumns: "6rem 1fr" }}
+              >
+                <span
+                  className="text-xs font-mono uppercase tracking-wider"
+                  style={{ color: "var(--text-subtle)", paddingTop: "0.2rem" }}
+                >
+                  AWS
+                </span>
+                <div>
+                  <span className="text-sm" style={{ color: "var(--text)" }}>
+                    {cert.name}
+                  </span>
+                  <span
+                    className="text-xs ml-2"
+                    style={{ color: "var(--text-subtle)" }}
+                  >
+                    {cert.issuer}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
