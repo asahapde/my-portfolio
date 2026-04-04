@@ -107,7 +107,7 @@ const Navbar = ({ theme, toggleTheme }: NavbarProps) => {
           <button
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            className="flex items-center justify-center w-7 h-7 rounded-md link-accent transition-colors duration-150"
+            className="flex items-center justify-center w-7 h-7 rounded-md link-accent transition-colors duration-150 cursor-pointer"
           >
             {theme === "light" ? <MoonIcon /> : <SunIcon />}
           </button>
@@ -118,7 +118,7 @@ const Navbar = ({ theme, toggleTheme }: NavbarProps) => {
           <button
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            className="flex items-center justify-center w-7 h-7 link-accent"
+            className="flex items-center justify-center w-7 h-7 link-accent cursor-pointer"
           >
             {theme === "light" ? <MoonIcon /> : <SunIcon />}
           </button>
