@@ -1,131 +1,97 @@
-import { useEffect, useRef } from "react";
-
-interface Experience {
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  highlights: string[];
-}
-
-const experiences: Experience[] = [
-  {
-    title: "Associate Software Engineer",
-    company: "Carfax",
-    period: "May 2023 – Present",
-    description:
-      "Delivered high-impact frontend solutions serving 200k+ users with React, and engineered automated Java tools for Google Ad Manager integrations, significantly improving operational efficiency.",
-    highlights: ["React", "Java", "Google Ad Manager"],
-  },
-  {
-    title: "Software Developer Intern",
-    company: "Ontario Teacher's Pension Plan",
-    period: "May 2021 – Sep 2022",
-    description:
-      "Spearheaded automation initiatives and developed sophisticated Angular-based tools that streamlined workflows across multiple teams, resulting in measurable productivity gains.",
-    highlights: ["Angular", "Automation", "Workflow Optimization"],
-  },
-  {
-    title: "Software Developer Intern",
-    company: "Western University",
-    period: "May 2020 – Aug 2020",
-    description:
-      "Architected and developed a full-stack mission control dashboard using Angular and Node.js, enabling real-time system monitoring and management capabilities.",
-    highlights: ["Angular", "Node.js", "Full-Stack"],
-  },
-];
-
-function useReveal() {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("visible");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return ref;
-}
+import { useRef, useState } from "react";
+import { jobs } from "../data";
+import { useReveal } from "../hooks";
+import SectionHeader from "./SectionHeader";
 
 const Experience = () => {
-  const sectionRef = useReveal() as React.RefObject<HTMLElement>;
+  const sectionRef = useReveal<HTMLElement>();
+  const [activeId, setActiveId] = useState(jobs[0].id);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const job = jobs.find((j) => j.id === activeId) ?? jobs[0];
+
+  const onKeyDown = (e: React.KeyboardEvent, index: number) => {
+    const keys = ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"];
+    if (!keys.includes(e.key)) return;
+    e.preventDefault();
+    const dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
+    const next = (index + dir + jobs.length) % jobs.length;
+    setActiveId(jobs[next].id);
+    tabRefs.current[next]?.focus();
+  };
 
   return (
-    <section
-      id="experience"
-      ref={sectionRef}
-      className="reveal py-20"
-    >
-      <div className="max-w-3xl mx-auto px-6 sm:px-8">
-        {/* Section header */}
-        <div className="mb-10">
-          <p
-            className="text-xs font-mono mb-1"
-            style={{ color: "var(--text-subtle)" }}
+    <section id="experience" ref={sectionRef} className="reveal py-14 sm:py-16">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8">
+        <SectionHeader
+          index="01"
+          title="work"
+          subtitle="Six years across banking, automotive, pensions, and research, from internships to shipping at scale."
+        />
+
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-10">
+          <div
+            role="tablist"
+            aria-label="Companies"
+            aria-orientation="vertical"
+            className="flex sm:flex-col overflow-x-auto no-scrollbar shrink-0 sm:w-44 -mx-6 px-6 sm:mx-0 sm:px-0 border-b sm:border-b-0"
+            style={{ borderColor: "var(--border)" }}
           >
-            01
-          </p>
-          <h2 className="text-2xl font-semibold lowercase">work</h2>
-          <div className="divider mt-4" />
-        </div>
-
-        {/* Experience list */}
-        <div>
-          {experiences.map((exp, index) => (
             <div
-              key={exp.company}
-              className={index < experiences.length - 1 ? "pb-10 mb-10" : ""}
-              style={
-                index < experiences.length - 1
-                  ? { borderBottom: "1px solid var(--border)" }
-                  : {}
-              }
+              className="flex sm:flex-col w-full sm:border-l"
+              style={{ borderColor: "var(--border)" }}
             >
-              {/* Company + period */}
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-1">
-                <h3 className="text-base font-semibold">{exp.company}</h3>
-                <span
-                  className="text-sm font-mono shrink-0"
-                  style={{ color: "var(--text-subtle)" }}
+              {jobs.map((j, i) => (
+                <button
+                  key={j.id}
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
+                  role="tab"
+                  id={`tab-${j.id}`}
+                  aria-selected={j.id === activeId}
+                  aria-controls={`panel-${j.id}`}
+                  tabIndex={j.id === activeId ? 0 : -1}
+                  onClick={() => setActiveId(j.id)}
+                  onKeyDown={(e) => onKeyDown(e, i)}
+                  className="job-tab px-4 py-2.5 font-mono"
                 >
-                  {exp.period}
-                </span>
-              </div>
-
-              {/* Role */}
-              <p
-                className="text-sm mb-3"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {exp.title}
-              </p>
-
-              {/* Description */}
-              <p
-                className="text-sm leading-relaxed mb-4"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {exp.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2">
-                {exp.highlights.map((skill) => (
-                  <span key={skill} className="tag">
-                    {skill}
-                  </span>
-                ))}
-              </div>
+                  {j.short}
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div
+            key={job.id}
+            role="tabpanel"
+            id={`panel-${job.id}`}
+            aria-labelledby={`tab-${job.id}`}
+            className="panel-in flex-1 min-w-0 min-h-[22rem]"
+          >
+            <h3 className="text-lg font-semibold tracking-tight">
+              {job.role} <span className="text-accent">@ {job.company}</span>
+            </h3>
+            <p className="text-xs font-mono text-subtle mt-1 mb-4">
+              {job.period} · {job.location}
+            </p>
+            <p className="text-sm mb-5" style={{ color: "var(--text)" }}>
+              {job.summary}
+            </p>
+            <ul className="bullet-list space-y-2.5 mb-6">
+              {job.bullets.map((b) => (
+                <li key={b} className="text-sm text-muted leading-relaxed">
+                  {b}
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-wrap gap-2">
+              {job.tags.map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
