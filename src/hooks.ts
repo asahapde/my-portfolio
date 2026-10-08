@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+/** Window event (detail: job id) that switches the active tab in the work section. */
+export const SELECT_JOB_EVENT = "select-job";
+
 export function useReveal<T extends HTMLElement = HTMLElement>() {
   const ref = useRef<T>(null);
   useEffect(() => {

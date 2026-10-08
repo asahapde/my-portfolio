@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { jobs, links } from "../data";
+import { SELECT_JOB_EVENT } from "../hooks";
 import DotField from "./DotField";
+import PortraitDots from "./PortraitDots";
 import { ArrowUpRight, FileIcon, GitHubIcon, LinkedInIcon, MailIcon } from "./Icons";
 
 const timeline = [...jobs].reverse().map((job) => ({
@@ -19,7 +21,13 @@ const Timeline = () => (
         className={`timeline-stop ${stop.current ? "is-current" : ""}`}
         style={{ "--d": `${600 + i * 160}ms` } as React.CSSProperties}
       >
-        <a href="#experience" className="block pr-3">
+        <a
+          href="#experience"
+          className="block pr-3"
+          onClick={() =>
+            window.dispatchEvent(new CustomEvent(SELECT_JOB_EVENT, { detail: stop.id }))
+          }
+        >
           <span className="block text-[11px] font-mono text-subtle mb-3">
             {stop.current ? `${stop.year} – now` : stop.year}
           </span>
@@ -53,54 +61,64 @@ const Hero = () => {
       <DotField />
 
       <div ref={contentRef} className="reveal relative max-w-4xl w-full mx-auto px-6 sm:px-8 py-16 sm:py-20">
-        <h1
-          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter lowercase mb-7"
-          style={{ lineHeight: 1.02 }}
-        >
-          <span className="line-mask">
-            <span className="line-in">abdullah</span>
-          </span>{" "}
-          <span className="line-mask">
-            <span className="line-in" style={{ animationDelay: "90ms" }}>
-              sahapdeen<span className="text-accent">.</span>
-            </span>
-          </span>
-        </h1>
-
-        <p className="text-lg sm:text-xl text-muted max-w-xl mb-10" style={{ lineHeight: 1.6 }}>
-          Full-stack engineer who ships across the stack, from React interfaces used by
-          hundreds of thousands to AWS services and AI agent tooling.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-3">
-          <a href={`mailto:${links.email}`} className="btn-primary">
-            <MailIcon size={14} />
-            Email me
-          </a>
-          <a href={links.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-            <FileIcon size={14} />
-            Resume
-            <ArrowUpRight size={11} />
-          </a>
-          <div className="flex items-center gap-2 sm:ml-2">
-            <a
-              href={links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="icon-btn"
-              aria-label="GitHub profile"
+        <div className="flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-6 lg:gap-8">
+          <div className="min-w-0">
+            <h1
+              className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter lowercase mb-7"
+              style={{ lineHeight: 1.02 }}
             >
-              <GitHubIcon />
-            </a>
-            <a
-              href={links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="icon-btn"
-              aria-label="LinkedIn profile"
+              <span className="line-mask">
+                <span className="line-in">abdullah</span>
+              </span>{" "}
+              <span className="line-mask">
+                <span className="line-in" style={{ animationDelay: "90ms" }}>
+                  sahapdeen<span className="text-accent">.</span>
+                </span>
+              </span>
+            </h1>
+
+            <p
+              className="text-lg sm:text-xl text-muted max-w-xl lg:max-w-lg mb-10"
+              style={{ lineHeight: 1.6 }}
             >
-              <LinkedInIcon />
-            </a>
+              Full-stack engineer who ships across the stack, from React interfaces used by
+              hundreds of thousands to AWS services and AI agent tooling.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <a href={`mailto:${links.email}`} className="btn-primary">
+                <MailIcon size={14} />
+                Email me
+              </a>
+              <a href={links.resume} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                <FileIcon size={14} />
+                Resume
+                <ArrowUpRight size={11} />
+              </a>
+              <div className="flex items-center gap-2 sm:ml-2">
+                <a
+                  href={links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-btn"
+                  aria-label="GitHub profile"
+                >
+                  <GitHubIcon />
+                </a>
+                <a
+                  href={links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-btn"
+                  aria-label="LinkedIn profile"
+                >
+                  <LinkedInIcon />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="w-36 sm:w-44 lg:w-[266px] shrink-0">
+            <PortraitDots />
           </div>
         </div>
 

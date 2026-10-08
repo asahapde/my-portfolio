@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { jobs } from "../data";
-import { useReveal } from "../hooks";
+import { SELECT_JOB_EVENT, useReveal } from "../hooks";
 import SectionHeader from "./SectionHeader";
 
 const Experience = () => {
@@ -8,6 +8,12 @@ const Experience = () => {
   const [activeId, setActiveId] = useState(jobs[0].id);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const job = jobs.find((j) => j.id === activeId) ?? jobs[0];
+
+  useEffect(() => {
+    const onSelect = (e: Event) => setActiveId((e as CustomEvent<string>).detail);
+    window.addEventListener(SELECT_JOB_EVENT, onSelect);
+    return () => window.removeEventListener(SELECT_JOB_EVENT, onSelect);
+  }, []);
 
   const onKeyDown = (e: React.KeyboardEvent, index: number) => {
     const keys = ["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"];
