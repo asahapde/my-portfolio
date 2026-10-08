@@ -5,50 +5,6 @@ export const links = {
   resume: "/Abdullah_Sahapdeen_Resume.pdf",
 };
 
-export const focusAreas = [
-  "AI agents",
-  "full-stack products",
-  "test automation",
-  "cloud services",
-  "accessible UIs",
-];
-
-export interface Stat {
-  value: number;
-  prefix?: string;
-  suffix: string;
-  label: string;
-  context: string;
-}
-
-export const stats: Stat[] = [
-  {
-    value: 86,
-    suffix: "%",
-    label: "agent fix success rate",
-    context: "up from 27% at TD",
-  },
-  {
-    value: 200,
-    suffix: "%+",
-    label: "more lead submissions",
-    context: "homepage banner at CARFAX",
-  },
-  {
-    value: 35,
-    prefix: "~",
-    suffix: "%",
-    label: "faster initial load",
-    context: "React refactor at CARFAX",
-  },
-  {
-    value: 400,
-    suffix: "+",
-    label: "tests migrated",
-    context: "Tosca to Playwright at TD",
-  },
-];
-
 export interface Job {
   id: string;
   company: string;
@@ -148,6 +104,59 @@ export interface Project {
   liveLabel?: string;
   awards?: Award[];
 }
+
+export interface SpotlightProject extends Project {
+  year: string;
+  image: string;
+  imageAlt: string;
+  frameUrl: string;
+  metrics: { value: string; label: string }[];
+}
+
+export const spotlightProjects: SpotlightProject[] = [
+  {
+    title: "FocusFrame",
+    kind: "Computer vision · ad attention",
+    year: "2026",
+    description:
+      "Shows where a pretrained eye-movement model predicts people will look in a static ad. Mark the brand, headline, product, and CTA, then compare how much predicted attention each region gets across two layouts.",
+    features: [
+      "Real DeepGaze IIE inference returns a density grid; region scores use fractional-overlap math in the browser, never heatmap colours",
+      "One typed API contract generated from Pydantic, with tests that fail if it drifts",
+      "Hardened uploads (magic bytes, decompression-bomb limits, EXIF) and a reproducible evaluation with documented failure cases",
+    ],
+    metrics: [
+      { value: "0.55s", label: "per ad on GPU" },
+      { value: "1.3s", label: "per ad on CPU" },
+    ],
+    tech: ["Next.js", "TypeScript", "FastAPI", "PyTorch"],
+    github: "https://github.com/asahapde/focusframe",
+    image: "/projects/focusframe.jpg",
+    imageAlt: "FocusFrame comparing two ad layouts with predicted-attention heatmaps and labelled regions",
+    frameUrl: "focusframe · localhost",
+  },
+  {
+    title: "London Construction Map",
+    kind: "Civic data · maps",
+    year: "2026",
+    description:
+      "An independent, mobile-friendly map of current and upcoming roadwork in London, Ontario, built on the City's Renew data. It answers one question: what's happening on my street?",
+    features: [
+      "Server adapter paginates and retries the City's ArcGIS service, which browsers can't call directly",
+      "Per-layer last-known-good cache with Vercel Blob snapshots, so a City outage never blanks the map",
+      "Street search with abbreviation matching, filters, shareable URLs, and an accessible mobile bottom sheet",
+    ],
+    metrics: [
+      { value: "~600", label: "live City segments" },
+      { value: "30 min", label: "refresh window" },
+    ],
+    tech: ["Next.js", "TypeScript", "Leaflet", "Vercel"],
+    live: "https://london-construction-map.vercel.app",
+    image: "/projects/london-construction-map.jpg",
+    imageAlt: "Map of London, Ontario with road closures and lane restrictions drawn as coloured lines",
+    frameUrl: "london-construction-map.vercel.app",
+  },
+];
 
 export const featuredProjects: Project[] = [
   {

@@ -57,16 +57,10 @@ const Navbar = ({ theme, toggleTheme }: NavbarProps) => {
       <div className="max-w-4xl mx-auto px-6 sm:px-8 flex items-center justify-between h-14">
         <a
           href="#home"
-          className="flex items-center gap-2 text-sm font-semibold tracking-tight"
-          aria-label="Back to top"
+          className="text-sm font-semibold tracking-tight"
+          aria-label="Abdullah Sahapdeen, back to top"
         >
-          <span
-            className="grid place-items-center w-7 h-7 rounded-md text-[11px] font-mono font-bold"
-            style={{ background: "var(--text)", color: "var(--bg)" }}
-          >
-            AS
-          </span>
-          <span className="hidden sm:inline">Abdullah Sahapdeen</span>
+          abdullah sahapdeen<span className="text-accent">.</span>
         </a>
 
         <nav className="hidden sm:flex items-center gap-1" aria-label="Primary">

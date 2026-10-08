@@ -12,7 +12,10 @@ const SectionHeader = ({ index, title, id, subtitle }: SectionHeaderProps) => (
       <h2 id={id} className="text-2xl font-semibold tracking-tight lowercase">
         {title}
       </h2>
-      <div className="h-px flex-1" style={{ background: "var(--border)" }} />
+      <div
+        className="h-px flex-1"
+        style={{ background: "linear-gradient(to right, var(--border-strong), transparent)" }}
+      />
     </div>
     {subtitle && <p className="text-sm text-muted mt-3 max-w-xl">{subtitle}</p>}
   </div>

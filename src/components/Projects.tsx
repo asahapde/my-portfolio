@@ -1,7 +1,108 @@
-import { archiveProjects, featuredProjects, links, type Project } from "../data";
+import {
+  archiveProjects,
+  featuredProjects,
+  links,
+  spotlightProjects,
+  type Project,
+  type SpotlightProject,
+} from "../data";
 import { handleSpotlight, useReveal } from "../hooks";
 import { ArrowUpRight, GitHubIcon, TrophyIcon } from "./Icons";
 import SectionHeader from "./SectionHeader";
+
+const SpotlightCard = ({ project }: { project: SpotlightProject }) => (
+  <article className="card spotlight-card" onPointerMove={handleSpotlight}>
+    <a
+      href={project.live ?? project.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="spotlight-media block px-4 pt-4 sm:px-8 sm:pt-7"
+      tabIndex={-1}
+    >
+      <div className="browser-frame">
+        <div className="browser-bar" aria-hidden="true">
+          <span className="browser-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="browser-url">{project.frameUrl}</span>
+        </div>
+        <div className="browser-shot">
+          <img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </a>
+
+    <div className="grid grid-cols-1 md:grid-cols-[1.15fr_1fr] gap-x-10 gap-y-6 p-6 sm:p-8">
+      <div className="flex flex-col">
+        <p className="text-[11px] font-mono uppercase tracking-wider text-subtle mb-2">
+          {project.kind} · {project.year}
+        </p>
+
+        <h3 className="text-2xl font-semibold tracking-tight mb-3">{project.title}</h3>
+        <p className="text-sm text-muted leading-relaxed mb-5">{project.description}</p>
+
+        <div className="flex flex-wrap gap-2 mb-5">
+          {project.tech.map((t) => (
+            <span key={t} className="tag">
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 mt-auto">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost !py-1.5 !px-3 !text-xs"
+              aria-label={`${project.title} live site`}
+            >
+              Visit live site
+              <ArrowUpRight size={11} />
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost !py-1.5 !px-3 !text-xs"
+              aria-label={`${project.title} source code`}
+            >
+              <GitHubIcon size={13} />
+              Source
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <ul className="bullet-list space-y-2">
+          {project.features.map((f) => (
+            <li key={f} className="text-[13px] text-muted leading-relaxed">
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <dl className="grid grid-cols-2 gap-3 mt-auto">
+          {project.metrics.map((m) => (
+            <div key={m.label} className="metric">
+              <dt className="sr-only">{m.label}</dt>
+              <dd className="text-lg font-semibold tracking-tight tabular-nums">{m.value}</dd>
+              <dd className="text-[11px] font-mono text-subtle" aria-hidden="true">
+                {m.label}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </article>
+);
 
 const ProjectCard = ({ project }: { project: Project }) => (
   <article className="card p-6 flex flex-col" onPointerMove={handleSpotlight}>
@@ -79,8 +180,14 @@ const Projects = () => {
         <SectionHeader
           index="02"
           title="projects"
-          subtitle="Things I've built outside of work, from AI tooling to a hackathon winner."
+          subtitle="Things I've built outside of work, from computer vision and civic maps to AI tooling and a hackathon winner."
         />
+
+        <div className="space-y-5 mb-5">
+          {spotlightProjects.map((p) => (
+            <SpotlightCard key={p.title} project={p} />
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {featuredProjects.map((p) => (

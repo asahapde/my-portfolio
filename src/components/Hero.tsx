@@ -1,44 +1,43 @@
-import { useEffect, useRef, useState } from "react";
-import { focusAreas, links, stats, type Stat } from "../data";
-import { handleSpotlight, useCountUp, useInView } from "../hooks";
+import { useEffect, useRef } from "react";
+import { jobs, links } from "../data";
+import DotField from "./DotField";
 import { ArrowUpRight, FileIcon, GitHubIcon, LinkedInIcon, MailIcon } from "./Icons";
 
-const RotatingWord = () => {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % focusAreas.length), 2400);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <span className="relative inline-block" aria-live="off">
-      <span key={index} className="word-in text-accent font-medium">
-        {focusAreas[index]}
-      </span>
-    </span>
-  );
-};
+const timeline = [...jobs].reverse().map((job) => ({
+  id: job.id,
+  year: job.period.match(/\d{4}/)?.[0] ?? "",
+  company: job.short,
+  role: job.role,
+  current: job.period.includes("Present"),
+}));
 
-const StatItem = ({ stat, start }: { stat: Stat; start: boolean }) => {
-  const value = useCountUp(stat.value, start);
-  return (
-    <div className="px-4 py-4 sm:px-5 sm:py-5" style={{ background: "var(--bg-card)" }}>
-      <div className="text-2xl sm:text-3xl font-semibold tracking-tight tabular-nums">
-        {stat.prefix}
-        {value}
-        <span className="text-accent">{stat.suffix}</span>
-      </div>
-      <div className="text-xs sm:text-sm mt-1" style={{ color: "var(--text)" }}>
-        {stat.label}
-      </div>
-      <div className="text-[11px] sm:text-xs font-mono text-subtle mt-0.5">{stat.context}</div>
-    </div>
-  );
-};
+const Timeline = () => (
+  <ol className="timeline mt-16 sm:mt-20 grid grid-cols-4" aria-label="Career timeline">
+    {timeline.map((stop, i) => (
+      <li
+        key={stop.id}
+        className={`timeline-stop ${stop.current ? "is-current" : ""}`}
+        style={{ "--d": `${600 + i * 160}ms` } as React.CSSProperties}
+      >
+        <a href="#experience" className="block pr-3">
+          <span className="block text-[11px] font-mono text-subtle mb-3">
+            {stop.current ? `${stop.year} – now` : stop.year}
+          </span>
+          <span className="timeline-track" aria-hidden="true">
+            <span className="timeline-dot" />
+          </span>
+          <span className="timeline-company block text-sm font-medium mt-4">{stop.company}</span>
+          <span className="hidden sm:block text-xs text-muted mt-0.5 leading-snug">
+            {stop.role}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+);
 
 const Hero = () => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [statsRef, statsInView] = useInView<HTMLDivElement>();
 
   useEffect(() => {
     const t = setTimeout(() => contentRef.current?.classList.add("visible"), 80);
@@ -49,34 +48,28 @@ const Hero = () => {
     <section
       id="home"
       className="hero relative min-h-[100svh] flex flex-col justify-center pt-14 overflow-hidden"
-      onPointerMove={handleSpotlight}
     >
-      <div className="hero-bg" aria-hidden="true" />
-      <div className="hero-spot" aria-hidden="true" />
+      <div className="hero-glow" aria-hidden="true" />
+      <DotField />
 
       <div ref={contentRef} className="reveal relative max-w-4xl w-full mx-auto px-6 sm:px-8 py-16 sm:py-20">
-        <div className="status-pill mb-8">
-          <span className="status-dot" aria-hidden="true" />
-          <span>
-            Software Engineer II at <span style={{ color: "var(--text)" }}>TD</span> · Toronto
-          </span>
-        </div>
-
         <h1
-          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter lowercase mb-6"
+          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter lowercase mb-7"
           style={{ lineHeight: 1.02 }}
         >
-          abdullah
-          <br />
-          sahapdeen<span className="text-accent">.</span>
+          <span className="line-mask">
+            <span className="line-in">abdullah</span>
+          </span>{" "}
+          <span className="line-mask">
+            <span className="line-in" style={{ animationDelay: "90ms" }}>
+              sahapdeen<span className="text-accent">.</span>
+            </span>
+          </span>
         </h1>
 
-        <p className="text-lg sm:text-xl text-muted max-w-xl mb-3" style={{ lineHeight: 1.6 }}>
+        <p className="text-lg sm:text-xl text-muted max-w-xl mb-10" style={{ lineHeight: 1.6 }}>
           Full-stack engineer who ships across the stack, from React interfaces used by
           hundreds of thousands to AWS services and AI agent tooling.
-        </p>
-        <p className="text-base sm:text-lg text-muted mb-10">
-          Currently building <RotatingWord />
         </p>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -111,15 +104,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div
-          ref={statsRef}
-          className="mt-14 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-px rounded-xl overflow-hidden"
-          style={{ background: "var(--border)", border: "1px solid var(--border)" }}
-        >
-          {stats.map((stat) => (
-            <StatItem key={stat.label} stat={stat} start={statsInView} />
-          ))}
-        </div>
+        <Timeline />
       </div>
     </section>
   );
